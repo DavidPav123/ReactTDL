@@ -1,36 +1,7 @@
 import * as React from 'react';
 import './style.css';
 import CTable from './Components/CTable.jsx';
-import './fb.js';
-import { getAuth, signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
-
-const provider = new GoogleAuthProvider();
-const auth = getAuth();
-
-function signIn(auth, provider) {
-    signInWithPopup(auth, provider)
-        .then((result) => {
-            // This gives you a Google Access Token. You can use it to access the Google API.
-            const credential = GoogleAuthProvider.credentialFromResult(result);
-            const token = credential.accessToken;
-            // The signed-in user info.
-            const user = result.user;
-            console.log(user);
-            // IdP data available using getAdditionalUserInfo(result)
-            // ...
-        })
-        .catch((error) => {
-            // Handle Errors here.
-            const errorCode = error.code;
-            const errorMessage = error.message;
-            // The email of the user's account used.
-            const email = error.customData.email;
-            // The AuthCredential type that was used.
-            const credential = GoogleAuthProvider.credentialFromError(error);
-            // ...
-        });
-}
-
+import Button from './Components/signInButton.jsx';
 
 export default class App extends React.Component {
     data = [];
@@ -56,14 +27,13 @@ export default class App extends React.Component {
         this.dueTimeHolder = e;
     }
 
-    handleSubmit = (event) => {
+    addItem = (event) => {
         this.data.push({
             name: this.nameHolder,
             subject: this.subjectHolder,
             dueDate: this.dueDateHolder,
             dueTime: this.dueTimeHolder,
         });
-        signIn(auth, provider);
         this.forceUpdate();
         event.preventDefault();
     };
@@ -101,7 +71,8 @@ export default class App extends React.Component {
                             onChange={(e) => this.setTime(e.target.value)}
                         />
                     </label>
-                    <button type="submit">Add Item</button>
+                    <button onClick={this.addItem}>Add Item</button>
+                    <Button />
                 </form>
                 <CTable rows={this.data} />
             </div>
