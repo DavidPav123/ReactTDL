@@ -1,11 +1,10 @@
 import * as React from 'react';
 import './style.css';
 import CTable from './Components/CTable.jsx';
-import { GoogleAuthProvider } from 'firebase/app';
-// Import the functions you need from the SDKs you need
 import { initializeApp } from 'firebase/app';
+import { GoogleAuthProvider, getAuth, signInWithPopup } from 'firebase/auth';
 
-// Your web app's Firebase configuration
+//Firebase configuration
 const firebaseConfig = {
   apiKey: 'AIzaSyAIX5O-TlglLId0xPyocVCoHG5xkHXhwKM',
   authDomain: 'deadline-list.firebaseapp.com',
@@ -17,6 +16,8 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
+const provider = new GoogleAuthProvider();
+const auth = getAuth();
 
 let curUser = '';
 
@@ -90,8 +91,6 @@ export default class App extends React.Component {
 
 function signIn(event) {
   event.preventDefault();
-  const provider = new GoogleAuthProvider();
-  const auth = getAuth();
 
   signInWithPopup(auth, provider)
     .then((result) => {
