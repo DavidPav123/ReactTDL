@@ -1,6 +1,12 @@
 import * as React from 'react';
 
 export default function CTable({ rows }) {
+  let sortedTable = [];
+
+  const sortTable = () => {
+    //Run some function to sort the rows and put it into sortedTable
+  };
+
   return (
     <table>
       <tbody>
@@ -10,7 +16,7 @@ export default function CTable({ rows }) {
           <th>Due Date</th>
           <th>Due Time</th>
         </tr>
-        {rows.map((val, key) => {
+        {sortedTable.map((val: any, key: any) => {
           return (
             <tr key={key}>
               <td>{val.name}</td>

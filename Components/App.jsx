@@ -1,6 +1,6 @@
 import * as React from 'react';
 import '../style.css';
-import CTable from './CTable.jsx';
+import CTable from './CTable.tsx';
 import { initializeApp } from 'firebase/app';
 import { GoogleAuthProvider, getAuth, signInWithPopup } from 'firebase/auth';
 import { getFirestore, setDoc, doc, getDoc } from 'firebase/firestore';
@@ -73,9 +73,6 @@ export default class App extends React.Component {
         this.curUser = user['uid'];
         console.log(this.curUser);
         this.readData();
-        console.log(this.data);
-        // IdP data available using getAdditionalUserInfo(result)
-        // ...
       })
       .catch((error) => {
         // Handle Errors here.
@@ -96,8 +93,18 @@ export default class App extends React.Component {
   }
 
   async readData() {
-    const querySnapshot = await getDoc(doc(this.db, 'users', this.curUser));
-    this.data = querySnapshot;
+    const docRef = doc(this.db, 'users', this.curUser);
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+      console.log('Document data:', docSnap.data());
+      this.data = docSnap.data().data;
+      console.log(this.data);
+      this.forceUpdate();
+    } else {
+      // doc.data() will be undefined in this case
+      console.log('No such document!');
+    }
   }
 
   render() {
