@@ -5,8 +5,6 @@ import { initializeApp } from 'firebase/app';
 import { GoogleAuthProvider, getAuth, signInWithPopup } from 'firebase/auth';
 import { getFirestore, setDoc, doc, getDoc } from 'firebase/firestore';
 
-//Firebase configuration
-
 export default class App extends React.Component {
   firebaseConfig = {
     apiKey: 'AIzaSyAIX5O-TlglLId0xPyocVCoHG5xkHXhwKM',
