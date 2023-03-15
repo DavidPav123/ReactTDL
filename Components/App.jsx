@@ -1,6 +1,6 @@
 import * as React from 'react';
-import './style.css';
-import CTable from './Components/CTable.jsx';
+import '../style.css';
+import CTable from './CTable.jsx';
 import { initializeApp } from 'firebase/app';
 import { GoogleAuthProvider, getAuth, signInWithPopup } from 'firebase/auth';
 import { getFirestore, setDoc, doc, getDoc } from 'firebase/firestore';
@@ -73,6 +73,7 @@ export default class App extends React.Component {
         this.curUser = user['uid'];
         console.log(this.curUser);
         this.readData();
+        console.log(this.data);
         // IdP data available using getAdditionalUserInfo(result)
         // ...
       })
