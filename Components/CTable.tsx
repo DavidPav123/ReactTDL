@@ -36,6 +36,7 @@ const sortTable = (
     }
     if (shouldSwitch) {
       [table[i], table[i + 1]] = [table[i + 1], table[i]];
+      console.log("Swapped" + table[i].name + "and" + table[i + 1].name);
       switching = true;
     }
   }
