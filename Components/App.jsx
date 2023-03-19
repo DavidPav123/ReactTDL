@@ -46,7 +46,7 @@ export default class App extends React.Component {
   }
 
   addItem = (event) => {
-    this.data.push({
+    this.data.unshift({
       name: this.nameHolder,
       subject: this.subjectHolder,
       dueDate: this.dueDateHolder,

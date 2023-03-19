@@ -3,6 +3,7 @@ import * as React from 'react';
 const sortTable = (
   table: [{ name: string; subject: string; dueDate: string; dueTime: string }]
 ) => {
+  console.log('Sort Table Called');
   let switching = true;
   let shouldSwitch: boolean = false;
   let i: number;
@@ -11,7 +12,7 @@ const sortTable = (
 
   while (switching) {
     switching = false;
-    for (i = 1; i < table.length - 1; i++) {
+    for (i = 0; i < table.length - 1; i++) {
       shouldSwitch = false;
       const dueTimeArray1 = table[i].dueTime.split(':');
       const dueTimeArray2 = table[i + 1].dueTime.split(':');
@@ -36,7 +37,7 @@ const sortTable = (
     }
     if (shouldSwitch) {
       [table[i], table[i + 1]] = [table[i + 1], table[i]];
-      console.log("Swapped" + table[i].name + "and" + table[i + 1].name);
+      console.log('Swapped ' + table[i].name + ' and ' + table[i + 1].name);
       switching = true;
     }
   }
