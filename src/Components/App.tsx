@@ -1,6 +1,6 @@
 import * as React from 'react';
 import '../style.css';
-import CTable from './CTable.tsx';
+import CTable from './CTable';
 import { initializeApp } from 'firebase/app';
 import { GoogleAuthProvider, getAuth, signInWithPopup } from 'firebase/auth';
 import { getFirestore, setDoc, doc, getDoc } from 'firebase/firestore';
@@ -29,23 +29,23 @@ export default class App extends React.Component {
   dueDateHolder = 0;
   dueTimeHolder = 0;
 
-  setName(e) {
+  setName(e: string) {
     this.nameHolder = e;
   }
 
-  setSubject(e) {
+  setSubject(e: string) {
     this.subjectHolder = e;
   }
 
-  setDate(e) {
-    this.dueDateHolder = e;
+  setDate(e: string) {
+    this.dueDateHolder = e as unknown as number;
   }
 
-  setTime(e) {
-    this.dueTimeHolder = e;
+  setTime(e: string) {
+    this.dueTimeHolder = e as unknown as number;
   }
 
-  addItem = (event) => {
+  addItem = (event: { preventDefault: () => void }) => {
     this.data.unshift({
       name: this.nameHolder,
       subject: this.subjectHolder,
@@ -57,17 +57,17 @@ export default class App extends React.Component {
     event.preventDefault();
   };
 
-  removeItem = (index) => {
+  removeItem = (index: number) => {
     this.data.splice(index, 1);
     this.addData();
     this.forceUpdate();
   };
 
-  signIn = (event) => {
+  signIn = (event: { preventDefault: () => void }) => {
     event.preventDefault();
 
     signInWithPopup(this.auth, this.provider)
-      .then((result) => {
+      .then((result: { user: any }) => {
         // This gives you a Google Access Token. You can use it to access the Google API.
         const credential = GoogleAuthProvider.credentialFromResult(result);
         const token = credential.accessToken;
@@ -78,16 +78,18 @@ export default class App extends React.Component {
         console.log(this.curUser);
         this.readData();
       })
-      .catch((error) => {
-        // Handle Errors here.
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        // The email of the user's account used.
-        const email = error.customData.email;
-        // The AuthCredential type that was used.
-        const credential = GoogleAuthProvider.credentialFromError(error);
-        // ...
-      });
+      .catch(
+        (error: { code: any; message: any; customData: { email: any } }) => {
+          // Handle Errors here.
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          // The email of the user's account used.
+          const email = error.customData.email;
+          // The AuthCredential type that was used.
+          const credential = GoogleAuthProvider.credentialFromError(error);
+          // ...
+        }
+      );
   };
 
   async addData() {
@@ -115,7 +117,7 @@ export default class App extends React.Component {
     return (
       <div>
         <h1>Deadline Tracker</h1>
-        <form onSubmit={this.handleSubmit}>
+        <form>
           <label>
             Name:
             <input type="text" onChange={(e) => this.setName(e.target.value)} />
