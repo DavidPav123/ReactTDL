@@ -65,13 +65,7 @@ function highlightRow(dueDate, dueTime) {
 }
 
 export default function CTable({ rows }) {
-  const [tableData, setTableData] = React.useState(rows);
-  let sortedTable = sortTable(tableData);
-
-  const handleDoubleClick = (index) => {
-    const updatedTableData = tableData.filter((_, i) => i !== index);
-    setTableData(updatedTableData);
-  };
+  let sortedTable = sortTable(rows);
 
   return (
     <table>
@@ -85,11 +79,7 @@ export default function CTable({ rows }) {
         {sortedTable.map((val: any, key: any) => {
           const rowClass = highlightRow(val.dueDate, val.dueTime);
           return (
-            <tr
-              key={key}
-              className={rowClass}
-              onDoubleClick={() => handleDoubleClick(key)}
-            >
+            <tr key={key} className={rowClass}>
               <td>{val.name}</td>
               <td>{val.subject}</td>
               <td>{val.dueDate}</td>
