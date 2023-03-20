@@ -79,7 +79,11 @@ export default function CTable({ rows, onRowRemove }) {
         {sortedTable.map((val: any, key: any) => {
           const rowClass = highlightRow(val.dueDate, val.dueTime);
           return (
-            <tr key={key} className={rowClass} onDoubleClick={() => onRowRemove(key)}>
+            <tr
+              key={key}
+              className={rowClass}
+              onDoubleClick={() => onRowRemove(key)}
+            >
               <td>{val.name}</td>
               <td>{val.subject}</td>
               <td>{val.dueDate}</td>
