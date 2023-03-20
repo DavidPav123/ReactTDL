@@ -1,4 +1,5 @@
 import * as React from 'react';
+import '../CTable.css';
 
 const sortTable = (
   table: [{ name: string; subject: string; dueDate: string; dueTime: string }]
@@ -44,6 +45,24 @@ const sortTable = (
   return table;
 };
 
+function highlightRow(dueDate, dueTime) {
+  const currentTime = new Date().getTime();
+  const dueTimeArray = dueTime.split(':');
+  const dueTimeInMilliseconds =
+    parseInt(dueTimeArray[0]) * 3600000 + parseInt(dueTimeArray[1]) * 60000;
+  const dueDateTime = new Date(dueDate).getTime() + 36000000 + dueTimeInMilliseconds;
+
+  const diff = dueDateTime - currentTime;
+
+  if (diff < 0) {
+    return 'highlight-red';
+  } else if (diff <= 86400000) {
+    return 'highlight-yellow';
+  } else {
+    return 'highlight-green';
+  }
+}
+
 export default function CTable({ rows }) {
   let sortedTable = sortTable(rows);
 
@@ -57,8 +76,9 @@ export default function CTable({ rows }) {
           <th>Due Time</th>
         </tr>
         {sortedTable.map((val: any, key: any) => {
+          const rowClass = highlightRow(val.dueDate, val.dueTime);
           return (
-            <tr key={key}>
+            <tr key={key} className={rowClass}>
               <td>{val.name}</td>
               <td>{val.subject}</td>
               <td>{val.dueDate}</td>
