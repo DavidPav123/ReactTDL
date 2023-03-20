@@ -57,6 +57,12 @@ export default class App extends React.Component {
     event.preventDefault();
   };
 
+  removeItem = (index) => {
+    this.data.splice(index, 1);
+    this.addData();
+    this.forceUpdate();
+  };
+
   signIn = (event) => {
     event.preventDefault();
 
@@ -132,7 +138,7 @@ export default class App extends React.Component {
           <button onClick={this.addItem}>Add Item</button>
           <button onClick={this.signIn}>Sign In</button>
         </form>
-        <CTable rows={this.data} />
+        <CTable rows={this.data} onRowRemove={this.removeItem} />
       </div>
     );
   }
