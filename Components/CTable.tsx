@@ -50,7 +50,8 @@ function highlightRow(dueDate, dueTime) {
   const dueTimeArray = dueTime.split(':');
   const dueTimeInMilliseconds =
     parseInt(dueTimeArray[0]) * 3600000 + parseInt(dueTimeArray[1]) * 60000;
-  const dueDateTime = new Date(dueDate).getTime() + 36000000 + dueTimeInMilliseconds;
+  const dueDateTime =
+    new Date(dueDate).getTime() + 36000000 + dueTimeInMilliseconds;
 
   const diff = dueDateTime - currentTime;
 
@@ -64,7 +65,13 @@ function highlightRow(dueDate, dueTime) {
 }
 
 export default function CTable({ rows }) {
-  let sortedTable = sortTable(rows);
+  const [tableData, setTableData] = React.useState(rows);
+  let sortedTable = sortTable(tableData);
+
+  const handleDoubleClick = (index) => {
+    const updatedTableData = tableData.filter((_, i) => i !== index);
+    setTableData(updatedTableData);
+  };
 
   return (
     <table>
@@ -78,7 +85,11 @@ export default function CTable({ rows }) {
         {sortedTable.map((val: any, key: any) => {
           const rowClass = highlightRow(val.dueDate, val.dueTime);
           return (
-            <tr key={key} className={rowClass}>
+            <tr
+              key={key}
+              className={rowClass}
+              onDoubleClick={() => handleDoubleClick(key)}
+            >
               <td>{val.name}</td>
               <td>{val.subject}</td>
               <td>{val.dueDate}</td>
