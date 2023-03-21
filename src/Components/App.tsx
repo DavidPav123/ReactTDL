@@ -138,7 +138,9 @@ export default class App extends React.Component {
             <input type="time" onChange={(e) => this.setTime(e.target.value)} />
           </label>
           <button onClick={this.addItem}>Add Item</button>
-          <button onClick={this.signIn}>Sign In</button>
+          {this.curUser === '' && (
+            <button onClick={this.signIn}>Sign In</button>
+          )}
         </form>
         <CTable rows={this.data} onRowRemove={this.removeItem} />
       </div>
