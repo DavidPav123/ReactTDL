@@ -46,6 +46,19 @@ export default class App extends React.Component {
   }
 
   addItem = (event: { preventDefault: () => void }) => {
+    event.preventDefault();
+
+    // Check if any field is empty
+    if (
+      this.nameHolder === '' ||
+      this.subjectHolder === '' ||
+      this.dueDateHolder === 0 ||
+      this.dueTimeHolder === 0
+    ) {
+      alert('All fields must be filled out.');
+      return;
+    }
+
     this.data.unshift({
       name: this.nameHolder,
       subject: this.subjectHolder,
@@ -54,7 +67,6 @@ export default class App extends React.Component {
     });
     this.addData();
     this.forceUpdate();
-    event.preventDefault();
   };
 
   removeItem = (index: number) => {
@@ -73,9 +85,7 @@ export default class App extends React.Component {
         const token = credential.accessToken;
         // The signed-in user info.
         const user = result.user;
-        console.log(user);
         this.curUser = user['uid'];
-        console.log(this.curUser);
         this.readData();
       })
       .catch(
@@ -103,13 +113,14 @@ export default class App extends React.Component {
     const docSnap = await getDoc(docRef);
 
     if (docSnap.exists()) {
-      console.log('Document data:', docSnap.data());
+      //console.log('Document data:', docSnap.data());
       this.data = docSnap.data().data;
-      console.log(this.data);
+      //console.log(this.data);
       this.forceUpdate();
     } else {
       // doc.data() will be undefined in this case
-      console.log('No such document!');
+      //console.log('No user data');
+      this.forceUpdate();
     }
   }
 
